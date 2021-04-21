@@ -94,6 +94,25 @@ client.connect((err) => {
     });
   });
 
+  app.post("/status/:id", (req, res) => {
+      const id = ObjectId(req.params.id);
+      console.log(id);
+
+      const info = req.body;
+      console.log(info);
+      bookingCollection.findOneAndUpdate(
+          {_id: id},
+          {$set: { status: info.status}}
+      )
+      .then(result => {
+        //   console.log(result);
+          res.send(result);
+      })
+      .catch(err => {
+        //   console.log(err);
+      })
+  })
+
   app.get("/", (req, res) => {
     res.send("Hello World!");
   });
